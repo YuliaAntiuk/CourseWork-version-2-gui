@@ -328,14 +328,11 @@ namespace GUI
             }
             return new double[] { minY, maxY };
         }
-        public void CreateGraphic(Form graphicalForm)
+        private Chart CreateChart()
         {
-            graphicalForm.Text = "Графіки рівнянь";
-            graphicalForm.Size = new System.Drawing.Size(600, 400);
-
             Chart chart = new Chart();
-            chart.Parent = graphicalForm;
             chart.Dock = DockStyle.Fill;
+
             ChartArea plot = new ChartArea("Графічний метод");
             chart.ChartAreas.Add(plot);
             plot.AxisX.Minimum = double.NaN;
@@ -345,103 +342,112 @@ namespace GUI
             plot.AxisX.IsStartedFromZero = false;
             plot.AxisY.IsStartedFromZero = false;
 
+            chart.MouseWheel += ChartMouseWheelEventHandler;
+
+            chart.Legends.Add(new Legend("Legend"));
+
+            return chart;
+        }
+        private void AddSeries(Chart chart, Series series)
+        {
+            chart.Series.Add(series);
+            chart.Series[series.Name].Legend = "Legend";
+        }
+        private void AddPointsToSeries(Series series, double startX, double endX, Func<double, double> calculateY)
+        {
+            for (double x = startX; x <= endX; x += 0.1)
+            {
+                double y = calculateY(x);
+                series.Points.AddXY(x, y);
+            }
+        }
+        public void CreateGraphic(Form graphicalForm)
+        {
+            graphicalForm.Text = "Графіки рівнянь";
+            graphicalForm.Size = new System.Drawing.Size(600, 400);
+
+            Chart chart = CreateChart();
+
             Series series1 = CreateSeries(0);
             Series series2 = CreateSeries(1);
             series1.Name = "Рівняння 1";
             series2.Name = "Рівняння 2";
 
-            chart.MouseWheel += (sender, e) =>
-            {
-                try
-                {
-                    double xMin = chart.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
-                    double xMax = chart.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
-                    double yMin = chart.ChartAreas[0].AxisY.ScaleView.ViewMinimum;
-                    double yMax = chart.ChartAreas[0].AxisY.ScaleView.ViewMaximum;
-                    double posXStart = xMin;
-                    double posXFinish = xMax;
-                    double posYStart = yMin;
-                    double posYFinish = yMax;
-
-                    if (e.Delta > 0)
-                    {
-                        // Збільшення масштабу
-                        double xRange = xMax - xMin;
-                        double yRange = yMax - yMin;
-
-                        posXStart = xMin - xRange * 0.25;
-                        posXFinish = xMax + xRange * 0.25;
-                        posYStart = yMin - yRange * 0.25;
-                        posYFinish = yMax + yRange * 0.25;
-                    }
-                    else if (e.Delta < 0)
-                    {
-                        // Зменшення масштабу
-                        double xRange = xMax - xMin;
-                        double yRange = yMax - yMin;
-
-                        posXStart = xMin + xRange * 0.25;
-                        posXFinish = xMax - xRange * 0.25;
-                        posYStart = yMin + yRange * 0.25;
-                        posYFinish = yMax - yRange * 0.25;
-                    }
-
-                    chart.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
-                    chart.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
-                }
-                catch { }
-            };
-
-
-
             double max = FindMaximum();
             double startX = (max > 0) ? (-max) : max;
             double endX = Math.Abs(max);
+
             if (Coefficients[0, 1] == 0)
             {
-                for (double x = startX; x <= endX; x += 0.1)
-                {
-                    double y2 = CalculateY(Coefficients[1, 0], Coefficients[1, 1], Constants[1], x);
-                    series2.Points.AddXY(x, y2);
-                }
+                AddPointsToSeries(series2, startX, endX, x => CalculateY(Coefficients[1, 0], Coefficients[1, 1], Constants[1], x));
                 double straightX = Constants[0] / Coefficients[0, 0];
                 series1.Points.AddXY(straightX, FindMinMaxY(series2)[0]);
                 series1.Points.AddXY(straightX, FindMinMaxY(series2)[1]);
             }
             else if (Coefficients[1, 1] == 0)
             {
-                for (double x = startX; x <= endX; x += 0.1)
-                {
-                    double y1 = CalculateY(Coefficients[0, 0], Coefficients[0, 1], Constants[0], x);
-                    series1.Points.AddXY(x, y1);
-                }
+                AddPointsToSeries(series1, startX, endX, x => CalculateY(Coefficients[0, 0], Coefficients[0, 1], Constants[0], x));
                 double straightX = Constants[1] / Coefficients[1, 0];
                 series2.Points.AddXY(straightX, FindMinMaxY(series1)[0]);
                 series2.Points.AddXY(straightX, FindMinMaxY(series1)[1]);
             }
             else
             {
-                for (double x = startX; x <= endX; x += 0.1)
-                {
-                    double y1 = CalculateY(Coefficients[0, 0], Coefficients[0, 1], Constants[0], x);
-                    series1.Points.AddXY(x, y1);
-
-                    double y2 = CalculateY(Coefficients[1, 0], Coefficients[1, 1], Constants[1], x);
-                    series2.Points.AddXY(x, y2);
-                }
+                AddPointsToSeries(series1, startX, endX, x => CalculateY(Coefficients[0, 0], Coefficients[0, 1], Constants[0], x));
+                AddPointsToSeries(series2, startX, endX, x => CalculateY(Coefficients[1, 0], Coefficients[1, 1], Constants[1], x));
             }
-            chart.Series.Add(series1);
-            chart.Series.Add(series2);
-            chart.Legends.Add(new Legend("Legend"));
-            chart.Series["Рівняння 1"].Legend = "Legend";
-            chart.Series["Рівняння 2"].Legend = "Legend";
+
+            AddSeries(chart, series1);
+            AddSeries(chart, series2);
 
             CalculateIntersectionPoints();
+
+            graphicalForm.Controls.Add(chart);
             graphicalForm.Show();
             graphicalForm.FormClosed += (sender, e) =>
             {
                 graphicalForm.Dispose();
             };
+        }
+        private void ChartMouseWheelEventHandler(object sender, MouseEventArgs e)
+        {
+            Chart chart = (Chart)sender;
+
+            double xMin = chart.ChartAreas[0].AxisX.ScaleView.ViewMinimum;
+            double xMax = chart.ChartAreas[0].AxisX.ScaleView.ViewMaximum;
+            double yMin = chart.ChartAreas[0].AxisY.ScaleView.ViewMinimum;
+            double yMax = chart.ChartAreas[0].AxisY.ScaleView.ViewMaximum;
+
+            double posXStart = xMin;
+            double posXFinish = xMax;
+            double posYStart = yMin;
+            double posYFinish = yMax;
+
+            if (e.Delta > 0)
+            {
+                // Zoom in
+                double xRange = xMax - xMin;
+                double yRange = yMax - yMin;
+
+                posXStart = Math.Round(xMin - xRange * 0.25, 1);
+                posXFinish = Math.Round(xMax + xRange * 0.25, 1);
+                posYStart = Math.Round(yMin - yRange * 0.25, 1);
+                posYFinish = Math.Round(yMax + yRange * 0.25, 1);
+            }
+            else if (e.Delta < 0)
+            {
+                // Zoom out
+                double xRange = xMax - xMin;
+                double yRange = yMax - yMin;
+
+                posXStart = Math.Round(xMin + xRange * 0.25, 1);
+                posXFinish = Math.Round(xMax - xRange * 0.25, 1);
+                posYStart = Math.Round(yMin + yRange * 0.25, 1);
+                posYFinish = Math.Round(yMax - yRange * 0.25, 1);
+            }
+
+            chart.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
+            chart.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
         }
         public Series CreateSeries(int index)
         {
