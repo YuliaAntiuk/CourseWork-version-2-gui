@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System;
-namespace GUI_Demo
+namespace GUI
 {
     public static class Validation
     {

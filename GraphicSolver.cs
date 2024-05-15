@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms.DataVisualization.Charting;
 using System.Windows.Forms;
 
-namespace GUI_Demo
+namespace GUI
 {
     public interface GraphicSolver
     {

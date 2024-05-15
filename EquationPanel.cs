@@ -1,5 +1,4 @@
-﻿using GUI_Demo;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -25,6 +24,7 @@ namespace GUI
             textBox.Width = width;
             textBox.Location = new Point(x, y);
             textBox.Validating += Validation.TextBox_Validating;
+            textBox.Font = new Font("Segoe UI", 8);
             return textBox;
         }
         private Label CreateEquationLabel(int x, int y, string text)
@@ -33,13 +33,18 @@ namespace GUI
             label.Text = text;
             label.AutoSize = true;
             label.Location = new Point(x, y);
+            label.Font = new Font("Segoe UI", 8);
             return label;
         }
-        public void DisplayEquationsInput(int dimension)
+        private void ClearPanel()
         {
             Controls.Clear();
             coefficientTextBoxes.Clear();
             constantTextBoxes.Clear();
+        }
+        public void DisplayEquationsInput(int dimension)
+        {
+            ClearPanel();
             const int textBoxWidth = 50;
             const int textBoxSpacing = 5;
             int yOffset = 30;

@@ -29,12 +29,11 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.очиститиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.розвязатиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.змінитиМетодToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.експортToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.обчислитиСкладністьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.інформаціяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ClearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SolveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChangeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ComplexityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PrimaryPanel = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxMethods = new System.Windows.Forms.ComboBox();
@@ -50,64 +49,61 @@
             this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.очиститиToolStripMenuItem,
-            this.розвязатиToolStripMenuItem,
-            this.змінитиМетодToolStripMenuItem,
-            this.експортToolStripMenuItem,
-            this.обчислитиСкладністьToolStripMenuItem,
-            this.інформаціяToolStripMenuItem});
+            this.ClearToolStripMenuItem,
+            this.SolveToolStripMenuItem,
+            this.ChangeToolStripMenuItem,
+            this.ExportToolStripMenuItem,
+            this.ComplexityToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(882, 31);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // очиститиToolStripMenuItem
+            // ClearToolStripMenuItem
             // 
-            this.очиститиToolStripMenuItem.Enabled = false;
-            this.очиститиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.очиститиToolStripMenuItem.Name = "очиститиToolStripMenuItem";
-            this.очиститиToolStripMenuItem.Size = new System.Drawing.Size(99, 27);
-            this.очиститиToolStripMenuItem.Text = "Очистити";
+            this.ClearToolStripMenuItem.Enabled = false;
+            this.ClearToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem";
+            this.ClearToolStripMenuItem.Size = new System.Drawing.Size(99, 27);
+            this.ClearToolStripMenuItem.Text = "Очистити";
+            this.ClearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
             // 
-            // розвязатиToolStripMenuItem
+            // SolveToolStripMenuItem
             // 
-            this.розвязатиToolStripMenuItem.Enabled = false;
-            this.розвязатиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.розвязатиToolStripMenuItem.Name = "розвязатиToolStripMenuItem";
-            this.розвязатиToolStripMenuItem.Size = new System.Drawing.Size(108, 27);
-            this.розвязатиToolStripMenuItem.Text = "Розв\'язати";
+            this.SolveToolStripMenuItem.Enabled = false;
+            this.SolveToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.SolveToolStripMenuItem.Name = "SolveToolStripMenuItem";
+            this.SolveToolStripMenuItem.Size = new System.Drawing.Size(108, 27);
+            this.SolveToolStripMenuItem.Text = "Розв\'язати";
+            this.SolveToolStripMenuItem.Click += new System.EventHandler(this.SolveToolStripMenuItem_Click);
             // 
-            // змінитиМетодToolStripMenuItem
+            // ChangeToolStripMenuItem
             // 
-            this.змінитиМетодToolStripMenuItem.Enabled = false;
-            this.змінитиМетодToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.змінитиМетодToolStripMenuItem.Name = "змінитиМетодToolStripMenuItem";
-            this.змінитиМетодToolStripMenuItem.Size = new System.Drawing.Size(138, 27);
-            this.змінитиМетодToolStripMenuItem.Text = "Змінити метод";
+            this.ChangeToolStripMenuItem.Enabled = false;
+            this.ChangeToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ChangeToolStripMenuItem.Name = "ChangeToolStripMenuItem";
+            this.ChangeToolStripMenuItem.Size = new System.Drawing.Size(138, 27);
+            this.ChangeToolStripMenuItem.Text = "Змінити метод";
+            this.ChangeToolStripMenuItem.Click += new System.EventHandler(this.ChangeToolStripMenuItem_Click);
             // 
-            // експортToolStripMenuItem
+            // ExportToolStripMenuItem
             // 
-            this.експортToolStripMenuItem.Enabled = false;
-            this.експортToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.експортToolStripMenuItem.Name = "експортToolStripMenuItem";
-            this.експортToolStripMenuItem.Size = new System.Drawing.Size(86, 27);
-            this.експортToolStripMenuItem.Text = "Експорт";
+            this.ExportToolStripMenuItem.Enabled = false;
+            this.ExportToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ExportToolStripMenuItem.Name = "ExportToolStripMenuItem";
+            this.ExportToolStripMenuItem.Size = new System.Drawing.Size(86, 27);
+            this.ExportToolStripMenuItem.Text = "Експорт";
+            this.ExportToolStripMenuItem.Click += new System.EventHandler(this.ExportToolStripMenuItem_Click);
             // 
-            // обчислитиСкладністьToolStripMenuItem
+            // ComplexityToolStripMenuItem
             // 
-            this.обчислитиСкладністьToolStripMenuItem.Enabled = false;
-            this.обчислитиСкладністьToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.обчислитиСкладністьToolStripMenuItem.Name = "обчислитиСкладністьToolStripMenuItem";
-            this.обчислитиСкладністьToolStripMenuItem.Size = new System.Drawing.Size(197, 27);
-            this.обчислитиСкладністьToolStripMenuItem.Text = "Обчислити складність";
-            // 
-            // інформаціяToolStripMenuItem
-            // 
-            this.інформаціяToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.інформаціяToolStripMenuItem.Name = "інформаціяToolStripMenuItem";
-            this.інформаціяToolStripMenuItem.Size = new System.Drawing.Size(115, 27);
-            this.інформаціяToolStripMenuItem.Text = "Інформація";
+            this.ComplexityToolStripMenuItem.Enabled = false;
+            this.ComplexityToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.ComplexityToolStripMenuItem.Name = "ComplexityToolStripMenuItem";
+            this.ComplexityToolStripMenuItem.Size = new System.Drawing.Size(197, 27);
+            this.ComplexityToolStripMenuItem.Text = "Обчислити складність";
+            this.ComplexityToolStripMenuItem.Click += new System.EventHandler(this.ComplexityToolStripMenuItem_Click);
             // 
             // PrimaryPanel
             // 
@@ -118,14 +114,14 @@
             this.PrimaryPanel.Controls.Add(this.label1);
             this.PrimaryPanel.Location = new System.Drawing.Point(0, 34);
             this.PrimaryPanel.Name = "PrimaryPanel";
-            this.PrimaryPanel.Size = new System.Drawing.Size(882, 115);
+            this.PrimaryPanel.Size = new System.Drawing.Size(882, 124);
             this.PrimaryPanel.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label3.Location = new System.Drawing.Point(12, 81);
+            this.label3.Location = new System.Drawing.Point(12, 94);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(188, 23);
             this.label3.TabIndex = 4;
@@ -133,22 +129,27 @@
             // 
             // comboBoxMethods
             // 
+            this.comboBoxMethods.DropDownHeight = 110;
             this.comboBoxMethods.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxMethods.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.comboBoxMethods.FormattingEnabled = true;
+            this.comboBoxMethods.IntegralHeight = false;
+            this.comboBoxMethods.ItemHeight = 23;
             this.comboBoxMethods.Items.AddRange(new object[] {
             "LUP-метод",
             "Метод обертання",
             "Метод квадратного кореня"});
-            this.comboBoxMethods.Location = new System.Drawing.Point(256, 48);
+            this.comboBoxMethods.Location = new System.Drawing.Point(256, 50);
             this.comboBoxMethods.Name = "comboBoxMethods";
-            this.comboBoxMethods.Size = new System.Drawing.Size(234, 24);
+            this.comboBoxMethods.Size = new System.Drawing.Size(234, 31);
             this.comboBoxMethods.TabIndex = 3;
+            this.comboBoxMethods.SelectedIndexChanged += new System.EventHandler(this.ComboBox_SelectedIndexChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label2.Location = new System.Drawing.Point(12, 48);
+            this.label2.Location = new System.Drawing.Point(12, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(225, 23);
             this.label2.TabIndex = 2;
@@ -156,10 +157,12 @@
             // 
             // DimensionInput
             // 
-            this.DimensionInput.Location = new System.Drawing.Point(372, 15);
+            this.DimensionInput.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.DimensionInput.Location = new System.Drawing.Point(372, 13);
             this.DimensionInput.Name = "DimensionInput";
-            this.DimensionInput.Size = new System.Drawing.Size(118, 22);
+            this.DimensionInput.Size = new System.Drawing.Size(118, 25);
             this.DimensionInput.TabIndex = 1;
+            this.DimensionInput.TextChanged += new System.EventHandler(this.DimensionInput_TextChanged);
             this.DimensionInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.DimensionInput_KeyPress);
             // 
             // label1
@@ -196,12 +199,11 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem очиститиToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem розвязатиToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem змінитиМетодToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem експортToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem обчислитиСкладністьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem інформаціяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ClearToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SolveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ChangeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ExportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ComplexityToolStripMenuItem;
         private System.Windows.Forms.Panel PrimaryPanel;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
