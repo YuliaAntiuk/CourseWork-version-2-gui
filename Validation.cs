@@ -5,8 +5,8 @@ namespace GUI
 {
     public static class Validation
     {
-        private static double maxRestriction = 1e10;
-        private static double minRestriction = 1e-10;
+        public static double maxRestriction = 1e10;
+        public static double minRestriction = 1e-10;
         public static bool IsDimensionEntered(TextBox DimensionInput)
         {
             if (int.TryParse(DimensionInput.Text, out int dimension))
@@ -39,7 +39,6 @@ namespace GUI
                 MessageBox.Show("Введено некоретктні символи!", "Помилка вводу", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
-            //Later add the maximum number of characters
         }
         public static bool IsEquationValid(Equation equation)
         {

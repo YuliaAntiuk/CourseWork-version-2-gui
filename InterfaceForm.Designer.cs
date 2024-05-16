@@ -35,7 +35,7 @@
             this.ExportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ComplexityToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PrimaryPanel = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.SelectLabel = new System.Windows.Forms.Label();
             this.comboBoxMethods = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.DimensionInput = new System.Windows.Forms.TextBox();
@@ -107,7 +107,7 @@
             // 
             // PrimaryPanel
             // 
-            this.PrimaryPanel.Controls.Add(this.label3);
+            this.PrimaryPanel.Controls.Add(this.SelectLabel);
             this.PrimaryPanel.Controls.Add(this.comboBoxMethods);
             this.PrimaryPanel.Controls.Add(this.label2);
             this.PrimaryPanel.Controls.Add(this.DimensionInput);
@@ -117,15 +117,15 @@
             this.PrimaryPanel.Size = new System.Drawing.Size(882, 124);
             this.PrimaryPanel.TabIndex = 1;
             // 
-            // label3
+            // SelectLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.label3.Location = new System.Drawing.Point(12, 94);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(188, 23);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Заповніть коефіцієнти:";
+            this.SelectLabel.AutoSize = true;
+            this.SelectLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.SelectLabel.Location = new System.Drawing.Point(12, 94);
+            this.SelectLabel.Name = "SelectLabel";
+            this.SelectLabel.Size = new System.Drawing.Size(188, 23);
+            this.SelectLabel.TabIndex = 4;
+            this.SelectLabel.Text = "Заповніть коефіцієнти: ";
             // 
             // comboBoxMethods
             // 
@@ -208,7 +208,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox DimensionInput;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label SelectLabel;
         private System.Windows.Forms.ComboBox comboBoxMethods;
     }
 }

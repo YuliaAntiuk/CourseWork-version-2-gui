@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace GUI
@@ -21,6 +15,7 @@ namespace GUI
         {
             InitializeComponent();
             equationPanel = new EquationPanel();
+            SelectLabel.Text += $"(|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0)";
         }
         private void ReadEquationsValues()
         {
@@ -170,7 +165,7 @@ namespace GUI
             string selectedMethod = comboBoxMethods.SelectedItem.ToString();
             if (!Validation.IsEquationValid(equation))
             {
-                MessageBox.Show("Коефіцієнти виходять за межі обмежень", "Невалідні коефіцієнти", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Коефіцієнти виходять за межі обмежень\n|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0", "Невалідні коефіцієнти", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else if (!Validation.IsSolvable(equation))
             {
