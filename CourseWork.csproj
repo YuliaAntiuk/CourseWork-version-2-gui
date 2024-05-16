@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Export.cs" />
     <Compile Include="GraphicSolver.cs" />
+    <Compile Include="IEventHandler.cs" />
     <Compile Include="InterfaceForm.cs">
       <SubType>Form</SubType>
     </Compile>

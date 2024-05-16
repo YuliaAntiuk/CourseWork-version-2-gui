@@ -77,5 +77,10 @@ namespace GUI
             }
             return true;
         }
+        public static bool IsEquationGraphicallySolvable(Equation equation)
+        {
+            double maxCoef = equation.FindMaximum();
+            return (maxCoef > minRestriction || maxCoef < maxRestriction || maxCoef == 0);
+        }
     }
 }

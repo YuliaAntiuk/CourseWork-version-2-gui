@@ -123,9 +123,9 @@
             this.SelectLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SelectLabel.Location = new System.Drawing.Point(12, 94);
             this.SelectLabel.Name = "SelectLabel";
-            this.SelectLabel.Size = new System.Drawing.Size(188, 23);
+            this.SelectLabel.Size = new System.Drawing.Size(193, 23);
             this.SelectLabel.TabIndex = 4;
-            this.SelectLabel.Text = "Заповніть коефіцієнти: ";
+            this.SelectLabel.Text = "Заповніть коефіцієнти ";
             // 
             // comboBoxMethods
             // 

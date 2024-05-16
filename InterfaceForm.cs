@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class InterfaceForm : Form
+    public partial class InterfaceForm : Form, IEventHandler
     {
         private EquationPanel equationPanel;
         private Equation equation;
@@ -15,7 +15,7 @@ namespace GUI
         {
             InitializeComponent();
             equationPanel = new EquationPanel();
-            SelectLabel.Text += $"(|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0)";
+            SelectLabel.Text += $"(|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0):";
         }
         private void ReadEquationsValues()
         {
@@ -40,7 +40,7 @@ namespace GUI
             }
             this.equation = new Equation(coefficients, constants, equationDimension);
         }
-        private void DimensionInput_KeyPress(object sender, KeyPressEventArgs e)
+        public void DimensionInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -111,7 +111,10 @@ namespace GUI
             ClearToolStripMenuItem.Enabled = true;
             ChangeToolStripMenuItem.Enabled = true;
             ExportToolStripMenuItem.Enabled = true;
-            ComplexityToolStripMenuItem.Enabled = true;
+            if(comboBoxMethods.SelectedItem.ToString() != "Графічний метод")
+            {
+                ComplexityToolStripMenuItem.Enabled = true;
+            }
         }
         private void DisableMenuItems()
         {
@@ -120,19 +123,6 @@ namespace GUI
             ExportToolStripMenuItem.Enabled = false;
             ComplexityToolStripMenuItem.Enabled = false;
             SolveToolStripMenuItem.Enabled = false;
-        }
-        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            equationPanel.Controls.Clear();
-            equationPanel.Height = 0;
-            DimensionInput.Text = "";
-            comboBoxMethods.SelectedItem = null;
-            comboBoxMethods.Items.Remove("Графічний метод");
-            graphicalForm.Dispose();
-            Controls.RemoveByKey("resultPanel");
-            Controls.RemoveByKey("complexityLabel");
-            EnableInputs();
-            DisableMenuItems();
         }
         private void UpdateSolveMenuState()
         {
@@ -158,7 +148,74 @@ namespace GUI
             }
             SolveToolStripMenuItem.Enabled = Validation.IsDimensionEntered(DimensionInput) && Validation.IsMethodSelected(comboBoxMethods) && areCoefficientsEntered && areConstantsEntered;
         }
-        private void SolveToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SolveEquation(string selectedMethod)
+        {
+            switch (selectedMethod)
+            {
+                case "Метод квадратного кореня":
+                    if (equation.CalculateDeterminant(equation.Coefficients) < 0 || !Validation.IsSymetrical(equation))
+                    {
+                        MessageBox.Show("Матриця коефіцієнтів несиметрична або має від'ємний визначник", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    else
+                    {
+                        equation.CalculateSqrtMethod();
+                    }
+                    break;
+                case "Метод обертання":
+                    equation.CalculateRotationMethod();
+                    break;
+                case "LUP-метод":
+                    equation.CalculateLUPMethod();
+                    break;
+                case "Графічний метод":
+                    if (!Validation.IsEquationGraphicallySolvable(equation))
+                    {
+                        MessageBox.Show("Система має невалідні коефіцієнти для відображення графіка", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        if (graphicalForm == null || graphicalForm.IsDisposed)
+                        {
+                            graphicalForm = new Form();
+                        }
+                        equation.CreateGraphic(graphicalForm);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            OutputResults(equation.Result);
+        }
+        private void OutputResults(double[] result)
+        {
+            int panelY = equationPanel.Bottom + 15;
+            resultPanel = new ResultPanel(result);
+            resultPanel.Height = 30 * result.Length;
+            resultPanel.Name = "resultPanel";
+            resultPanel.Location = new System.Drawing.Point(18, panelY);
+            this.Controls.Add(resultPanel);
+            resultPanel.UpdatePanelContent();
+            SolveToolStripMenuItem.Enabled = false;
+            int controlPanelY = resultPanel.Bottom + 15;
+            DisableInputs();
+            EnableMenuItems();
+        }
+        public void ClearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            equationPanel.Controls.Clear();
+            equationPanel.Height = 0;
+            DimensionInput.Text = "";
+            comboBoxMethods.SelectedItem = null;
+            comboBoxMethods.Items.Remove("Графічний метод");
+            graphicalForm.Dispose();
+            Controls.RemoveByKey("resultPanel");
+            Controls.RemoveByKey("complexityLabel");
+            EnableInputs();
+            DisableMenuItems();
+        }
+        public void SolveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int dimension = Convert.ToInt32(DimensionInput.Text);
             ReadEquationsValues();
@@ -175,62 +232,22 @@ namespace GUI
             {
                 try
                 {
-                    switch (selectedMethod)
-                    {
-                        case "Метод квадратного кореня":
-                            if (equation.CalculateDeterminant(equation.Coefficients) < 0 || !Validation.IsSymetrical(equation))
-                            {
-                                MessageBox.Show("Матриця коефіцієнтів несиметрична або має від'ємний визначник", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                            else
-                            {
-                                equation.CalculateSqrtMethod();
-                            }
-                            break;
-                        case "Метод обертання":
-                            equation.CalculateRotationMethod();
-                            break;
-                        case "LUP-метод":
-                            equation.CalculateLUPMethod();
-                            break;
-                        case "Графічний метод":
-                            if (graphicalForm == null || graphicalForm.IsDisposed)
-                            {
-                                graphicalForm = new Form();
-                            }
-                            equation.CreateGraphic(graphicalForm);
-                            break;
-                        default:
-                            break;
-                    }
+                    SolveEquation(selectedMethod);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Помилка в обчисленнях", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                OutputResults(equation.Result);
             }
-        }
-        private void OutputResults(double[] result)
-        {
-            int panelY = equationPanel.Bottom + 15;
-            resultPanel = new ResultPanel(result);
-            resultPanel.Height = 30 * result.Length;
-            resultPanel.Name = "resultPanel";
-            resultPanel.Location = new System.Drawing.Point(18, panelY);
-            this.Controls.Add(resultPanel);
-            resultPanel.UpdatePanelContent();
+            ClearToolStripMenuItem.Enabled = true;
             SolveToolStripMenuItem.Enabled = false;
-            int controlPanelY = resultPanel.Bottom + 15;
-            DisableInputs();
-            EnableMenuItems();
+            ChangeToolStripMenuItem.Enabled = true;
         }
-        private void DimensionInput_TextChanged(object sender, EventArgs e)
+        public void DimensionInput_TextChanged(object sender, EventArgs e)
         {
             UpdateSolveMenuState(); 
         }
-        private void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        public void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSolveMenuState();
         }
@@ -238,20 +255,21 @@ namespace GUI
         {
             UpdateSolveMenuState(); 
         }
-        private void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisableMenuItems();
             comboBoxMethods.Enabled = true;
             SolveToolStripMenuItem.Enabled = true;
             graphicalForm.Dispose();
             Controls.RemoveByKey("resultPanel");
+            Controls.RemoveByKey("complexityLabel");
         }
-        private void ExportToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ExportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Export export = new Export(equation);
             export.OpenExportFile();
         }
-        private void ComplexityToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ComplexityToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Label complexityLabel = new Label();
             complexityLabel.Text = $"Практична складність - {equation.IterationCounter}";
