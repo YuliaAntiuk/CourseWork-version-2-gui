@@ -29,6 +29,9 @@ namespace GUI
                     if (coefficientTextBox != null && double.TryParse(coefficientTextBox.Text, out double coefficient))
                     {
                         coefficients[i, j] = coefficient;
+                    } else
+                    {
+                        MessageBox.Show("Не вдається записати коефіцієнти", "Помилка запису", MessageBoxButtons.OK, MessageBoxIcon.Error );
                     }
                 }
 
@@ -36,6 +39,10 @@ namespace GUI
                 if (constantTextBox != null && double.TryParse(constantTextBox.Text, out double constant))
                 {
                     constants[i] = constant;
+                }
+                else
+                {
+                    MessageBox.Show("Не вдається записати коефіцієнти", "Помилка запису", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             this.equation = new Equation(coefficients, constants, equationDimension);
