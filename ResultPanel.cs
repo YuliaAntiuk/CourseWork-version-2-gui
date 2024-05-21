@@ -14,7 +14,10 @@ namespace GUI
         {
             this.Controls.Clear();
 
-            int labelY = 0;
+            int labelWidth = 100;  // Width of each label, adjust as needed
+            int labelHeight = 30;  // Height of each label
+            int labelsPerRow = 3;  // Number of labels per row
+
             for (int i = 0; i < Results.Length; i++)
             {
                 Label resultLabel = new Label();
@@ -23,11 +26,13 @@ namespace GUI
                 resultLabel.AutoSize = true;
                 resultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10f, System.Drawing.FontStyle.Regular);
 
-                resultLabel.Location = new System.Drawing.Point(0, labelY);
-                this.Controls.Add(resultLabel);
+                int row = i / labelsPerRow;
+                int column = i % labelsPerRow;
 
-                labelY += 30;
+                resultLabel.Location = new System.Drawing.Point(column * labelWidth, row * labelHeight);
+                this.Controls.Add(resultLabel);
             }
         }
+
     }
 }

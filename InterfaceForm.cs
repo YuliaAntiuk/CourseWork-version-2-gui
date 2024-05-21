@@ -199,7 +199,8 @@ namespace GUI
         {
             int panelY = equationPanel.Bottom + 15;
             resultPanel = new ResultPanel(result);
-            resultPanel.Height = 30 * result.Length;
+            resultPanel.Width = 300;
+            resultPanel.Height = 12 * result.Length;
             resultPanel.Name = "resultPanel";
             resultPanel.Location = new System.Drawing.Point(18, panelY);
             this.Controls.Add(resultPanel);
