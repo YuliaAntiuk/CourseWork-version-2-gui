@@ -107,6 +107,7 @@
             // 
             // PrimaryPanel
             // 
+            this.PrimaryPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.PrimaryPanel.Controls.Add(this.SelectLabel);
             this.PrimaryPanel.Controls.Add(this.comboBoxMethods);
             this.PrimaryPanel.Controls.Add(this.label2);
@@ -123,7 +124,7 @@
             this.SelectLabel.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.SelectLabel.Location = new System.Drawing.Point(12, 94);
             this.SelectLabel.Name = "SelectLabel";
-            this.SelectLabel.Size = new System.Drawing.Size(193, 23);
+            this.SelectLabel.Size = new System.Drawing.Size(189, 23);
             this.SelectLabel.TabIndex = 4;
             this.SelectLabel.Text = "Заповніть коефіцієнти ";
             // 
@@ -179,9 +180,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(882, 553);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(882, 853);
             this.Controls.Add(this.PrimaryPanel);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximumSize = new System.Drawing.Size(1970, 1800);
             this.MinimumSize = new System.Drawing.Size(850, 600);

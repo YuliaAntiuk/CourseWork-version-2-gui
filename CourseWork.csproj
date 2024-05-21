@@ -52,7 +52,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Export.cs" />
-    <Compile Include="GraphicSolver.cs" />
+    <Compile Include="IGraphicSolver.cs" />
     <Compile Include="IEventHandler.cs" />
     <Compile Include="InterfaceForm.cs">
       <SubType>Form</SubType>

@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public interface GraphicSolver
+    public interface IGraphicSolver
     {
-        double FindMaximum();
+        double[] FindMaximumMinimum();
         void CreateGraphic(Form graphicalForm);
         Series CreateSeries(int index);
         double[] FindMinMaxY(Series series);

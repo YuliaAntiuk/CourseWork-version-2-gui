@@ -223,25 +223,28 @@ namespace GUI
             if (!Validation.IsEquationValid(equation))
             {
                 MessageBox.Show($"Коефіцієнти виходять за межі обмежень\n|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0", "Невалідні коефіцієнти", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableMenuItems();
             }
             else if (!Validation.IsSolvable(equation))
             {
                 MessageBox.Show("Система має нуль або безліч розв'язків", "Нульовий визначник", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DisableMenuItems();
             }
             else
             {
                 try
                 {
                     SolveEquation(selectedMethod);
+                    SolveToolStripMenuItem.Enabled = false;
+                    ChangeToolStripMenuItem.Enabled = true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Помилка в обчисленнях", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    DisableMenuItems();
                 }
             }
             ClearToolStripMenuItem.Enabled = true;
-            SolveToolStripMenuItem.Enabled = false;
-            ChangeToolStripMenuItem.Enabled = true;
         }
         public void DimensionInput_TextChanged(object sender, EventArgs e)
         {
@@ -258,9 +261,10 @@ namespace GUI
         public void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisableMenuItems();
-            comboBoxMethods.Enabled = true;
             SolveToolStripMenuItem.Enabled = true;
             graphicalForm.Dispose();
+            DisableInputs();
+            comboBoxMethods.Enabled = true;
             Controls.RemoveByKey("resultPanel");
             Controls.RemoveByKey("complexityLabel");
         }

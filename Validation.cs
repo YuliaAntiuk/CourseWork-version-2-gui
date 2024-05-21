@@ -5,8 +5,8 @@ namespace GUI
 {
     public static class Validation
     {
-        public static double maxRestriction = 1e10;
-        public static double minRestriction = 1e-10;
+        public static double maxRestriction = 1e6;
+        public static double minRestriction = 1e-6;
         public static bool IsDimensionEntered(TextBox DimensionInput)
         {
             if (int.TryParse(DimensionInput.Text, out int dimension))
@@ -34,9 +34,9 @@ namespace GUI
         {
             TextBox textBox = sender as TextBox;
             string text = textBox.Text;
-            if (!Regex.IsMatch(text, @"^$|^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$"))
+            if (!Regex.IsMatch(text, @"^$|^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$") || text.Length > 10)
             {
-                MessageBox.Show("Введено некоретктні символи!", "Помилка вводу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Введено некоретктні символи або їх кількість більша 10!", "Помилка вводу", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 e.Cancel = true;
             }
         }
@@ -79,8 +79,10 @@ namespace GUI
         }
         public static bool IsEquationGraphicallySolvable(Equation equation)
         {
-            double maxCoef = equation.FindMaximum();
-            return (maxCoef > minRestriction || maxCoef < maxRestriction || maxCoef == 0);
+            double[] maxMin = equation.FindMaximumMinimum();
+            double maxCoef = maxMin[0];
+            double minCoef = maxMin[1];
+            return ((maxCoef > minRestriction || maxCoef < maxRestriction || maxCoef == 0) && (minCoef > minRestriction || minCoef < maxRestriction || minCoef == 0));
         }
     }
 }

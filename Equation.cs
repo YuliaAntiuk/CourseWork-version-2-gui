@@ -6,7 +6,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GUI
 {
-    public class Equation : GraphicSolver
+    public class Equation : IGraphicSolver
     {
         public double[,] Coefficients { get; set; }
         public double[] Constants { get; set; }
@@ -292,7 +292,7 @@ namespace GUI
                 Result[i] /= U[i, i];
             }
         }
-        public double FindMaximum()
+        public double[] FindMaximumMinimum()
         {
             int arrSize = Size * 3;
             double[] arr = new double[arrSize];
@@ -307,7 +307,9 @@ namespace GUI
                 arr[k] = Constants[i];
                 k++;
             }
-            return arr.Max();
+            double max = arr.Max();
+            double min = arr.Min();
+            return new double[] { max, min };
         }
         public double[] FindMinMaxY(Series series)
         {
@@ -373,7 +375,7 @@ namespace GUI
             series1.Name = "Рівняння 1";
             series2.Name = "Рівняння 2";
 
-            double max = FindMaximum();
+            double max = FindMaximumMinimum()[0];
             double startX = (max > 0) ? (-max) : max;
             double endX = Math.Abs(max);
 
