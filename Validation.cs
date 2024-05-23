@@ -77,6 +77,34 @@ namespace GUI
             }
             return true;
         }
+        public static bool IsPositiveDefinite(Equation equation)
+        {
+            int n = equation.Coefficients.GetLength(0);
+
+            for (int k = 1; k <= n; k++)
+            {
+                double[,] minor = GetLeadingMinor(equation.Coefficients, k);
+                double det = equation.CalculateDeterminant(minor);
+                if (det <= 0)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        private static double[,] GetLeadingMinor(double[,] matrix, int size)
+        {
+            double[,] minor = new double[size, size];
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    minor[i, j] = matrix[i, j];
+                }
+            }
+            return minor;
+        }
         public static bool IsEquationGraphicallySolvable(Equation equation)
         {
             double[] maxMin = equation.FindMaximumMinimum();

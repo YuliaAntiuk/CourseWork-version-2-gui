@@ -15,7 +15,7 @@ namespace GUI
         {
             InitializeComponent();
             equationPanel = new EquationPanel();
-            SelectLabel.Text += $"(|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0):";
+            SelectLabel.Text += $"(|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| або 0):";
         }
         private void ReadEquationsValues()
         {
@@ -55,7 +55,7 @@ namespace GUI
                 {
                     if (equationDimension < 2 || equationDimension > 10)
                     {
-                        MessageBox.Show("Розмірність системи повинна бути між 2 та 10", "Помилка введення", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Розмірність системи повинна бути між 2 та 10", "Помилка вводу", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                     else
                     {
@@ -160,9 +160,10 @@ namespace GUI
             switch (selectedMethod)
             {
                 case "Метод квадратного кореня":
-                    if (equation.CalculateDeterminant(equation.Coefficients) < 0 || !Validation.IsSymetrical(equation))
+                    if (!Validation.IsPositiveDefinite(equation) || !Validation.IsSymetrical(equation))
                     {
-                        MessageBox.Show("Матриця коефіцієнтів несиметрична або має від'ємний визначник", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Матриця коефіцієнтів несиметрична або має від'ємно визначена", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DisableInputs();
                         return;
                     }
                     else
@@ -230,7 +231,7 @@ namespace GUI
             string selectedMethod = comboBoxMethods.SelectedItem.ToString();
             if (!Validation.IsEquationValid(equation))
             {
-                MessageBox.Show($"Коефіцієнти виходять за межі обмежень\n|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| or 0", "Невалідні коефіцієнти", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Коефіцієнти виходять за межі обмежень\n|{Validation.minRestriction}| - |{Validation.maxRestriction.ToString("0.E+0")}| або 0", "Невалідні коефіцієнти", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DisableMenuItems();
             }
             else if (!Validation.IsSolvable(equation))
