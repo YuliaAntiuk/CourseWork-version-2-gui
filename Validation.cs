@@ -7,6 +7,7 @@ namespace GUI
     {
         public static double maxRestriction = 1e6;
         public static double minRestriction = 1e-6;
+        public static double graphicalDiffRestriction = 100.0;
         public static bool IsDimensionEntered(TextBox DimensionInput)
         {
             if (int.TryParse(DimensionInput.Text, out int dimension))
@@ -110,7 +111,7 @@ namespace GUI
             double[] maxMin = equation.FindMaximumMinimum();
             double maxCoef = maxMin[0];
             double minCoef = maxMin[1];
-            return ((maxCoef > minRestriction || maxCoef < maxRestriction || maxCoef == 0) && (minCoef > minRestriction || minCoef < maxRestriction || minCoef == 0));
+            return (Math.Abs(maxCoef - minCoef) <= graphicalDiffRestriction);
         }
     }
 }

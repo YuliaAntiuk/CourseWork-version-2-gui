@@ -162,7 +162,7 @@ namespace GUI
                 case "Метод квадратного кореня":
                     if (!Validation.IsPositiveDefinite(equation) || !Validation.IsSymetrical(equation))
                     {
-                        MessageBox.Show("Матриця коефіцієнтів несиметрична або має від'ємно визначена", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Матриця коефіцієнтів несиметрична або від'ємно визначена", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         DisableInputs();
                         return;
                     }
@@ -181,6 +181,8 @@ namespace GUI
                     if (!Validation.IsEquationGraphicallySolvable(equation))
                     {
                         MessageBox.Show("Система має невалідні коефіцієнти для відображення графіка", "Систему неможливо розв'язати даним методом", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        DisableInputs();
+                        return;
                     }
                     else
                     {
