@@ -431,10 +431,10 @@ namespace GUI
                 double xRange = xMax - xMin;
                 double yRange = yMax - yMin;
 
-                posXStart = Math.Round(xMin - xRange * 0.25, 1);
-                posXFinish = Math.Round(xMax + xRange * 0.25, 1);
-                posYStart = Math.Round(yMin - yRange * 0.25, 1);
-                posYFinish = Math.Round(yMax + yRange * 0.25, 1);
+                posXStart = Math.Round(xMin + xRange * 0.25, 1);
+                posXFinish = Math.Round(xMax - xRange * 0.25, 1);
+                posYStart = Math.Round(yMin + yRange * 0.25, 1);
+                posYFinish = Math.Round(yMax - yRange * 0.25, 1);
             }
             else if (e.Delta < 0)
             {
@@ -442,15 +442,16 @@ namespace GUI
                 double xRange = xMax - xMin;
                 double yRange = yMax - yMin;
 
-                posXStart = Math.Round(xMin + xRange * 0.25, 1);
-                posXFinish = Math.Round(xMax - xRange * 0.25, 1);
-                posYStart = Math.Round(yMin + yRange * 0.25, 1);
-                posYFinish = Math.Round(yMax - yRange * 0.25, 1);
+                posXStart = Math.Round(xMin - xRange * 0.25, 1);
+                posXFinish = Math.Round(xMax + xRange * 0.25, 1);
+                posYStart = Math.Round(yMin - yRange * 0.25, 1);
+                posYFinish = Math.Round(yMax + yRange * 0.25, 1);
             }
 
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
             chart.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
         }
+
         public Series CreateSeries(int index)
         {
             Series series = new Series();
