@@ -330,7 +330,7 @@ namespace GUI
             }
             return new double[] { minY, maxY };
         }
-        private Chart CreateChart()
+        public Chart CreateChart()
         {
             Chart chart = new Chart();
             chart.Dock = DockStyle.Fill;
@@ -350,12 +350,12 @@ namespace GUI
 
             return chart;
         }
-        private void AddSeries(Chart chart, Series series)
+        public void AddSeries(Chart chart, Series series)
         {
             chart.Series.Add(series);
             chart.Series[series.Name].Legend = "Legend";
         }
-        private void AddPointsToSeries(Series series, double startX, double endX, Func<double, double> calculateY)
+        public void AddPointsToSeries(Series series, double startX, double endX, Func<double, double> calculateY)
         {
             for (double x = startX; x <= endX; x += 0.1)
             {
@@ -411,7 +411,7 @@ namespace GUI
                 graphicalForm.Dispose();
             };
         }
-        private void ChartMouseWheelEventHandler(object sender, MouseEventArgs e)
+        public void ChartMouseWheelEventHandler(object sender, MouseEventArgs e)
         {
             Chart chart = (Chart)sender;
 
@@ -451,7 +451,6 @@ namespace GUI
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
             chart.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
         }
-
         public Series CreateSeries(int index)
         {
             Series series = new Series();
@@ -465,7 +464,7 @@ namespace GUI
             Result[0] = (Coefficients[1, 1] * Constants[0] - Coefficients[0, 1] * Constants[1]) / CalculateDeterminant(Coefficients);
             Result[1] = (Coefficients[0, 0] * Constants[1] - Coefficients[1, 0] * Constants[0]) / CalculateDeterminant(Coefficients);
         }
-        private double CalculateY(double a1, double a2, double b, double x)
+        public double CalculateY(double a1, double a2, double b, double x)
         {
             if (a2 != 0)
             {
