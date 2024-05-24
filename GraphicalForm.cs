@@ -148,7 +148,6 @@ namespace GUI
 
             if (e.Delta > 0)
             {
-                // Zoom in
                 double xRange = xMax - xMin;
                 double yRange = yMax - yMin;
 
@@ -159,7 +158,6 @@ namespace GUI
             }
             else if (e.Delta < 0)
             {
-                // Zoom out
                 double xRange = xMax - xMin;
                 double yRange = yMax - yMin;
 

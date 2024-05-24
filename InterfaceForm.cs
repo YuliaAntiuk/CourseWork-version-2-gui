@@ -200,16 +200,18 @@ namespace GUI
         }
         private void OutputResults(double[] result)
         {
-            int panelY = equationPanel.Bottom + 15;
+            int offset = 15;
+            int panelX = 18;
+            int panelY = equationPanel.Bottom + offset;
             resultPanel = new ResultPanel(result);
             resultPanel.Width = 300;
             resultPanel.Height = 12 * result.Length;
             resultPanel.Name = "resultPanel";
-            resultPanel.Location = new System.Drawing.Point(18, panelY);
+            resultPanel.Location = new System.Drawing.Point(panelX, panelY);
             this.Controls.Add(resultPanel);
             resultPanel.UpdatePanelContent();
             SolveToolStripMenuItem.Enabled = false;
-            int controlPanelY = resultPanel.Bottom + 15;
+            int controlPanelY = resultPanel.Bottom + offset;
             DisableInputs();
             EnableMenuItems();
         }
