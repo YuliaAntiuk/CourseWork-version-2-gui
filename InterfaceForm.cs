@@ -8,7 +8,7 @@ namespace GUI
     {
         private EquationPanel equationPanel;
         private Equation equation;
-        private Form graphicalForm = new Form();
+        private GraphicalForm graphicalForm;
         private ResultPanel resultPanel;
         private int equationDimension;
         public InterfaceForm()
@@ -188,9 +188,9 @@ namespace GUI
                     {
                         if (graphicalForm == null || graphicalForm.IsDisposed)
                         {
-                            graphicalForm = new Form();
+                            graphicalForm = new GraphicalForm(equation);
                         }
-                        equation.CreateGraphic(graphicalForm);
+                        graphicalForm.CreateGraphic();
                     }
                     break;
                 default:
