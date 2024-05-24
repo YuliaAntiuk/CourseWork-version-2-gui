@@ -39,7 +39,7 @@ namespace GUI
 
             return minor;
         }
-        private double[,] Transpose(double[,] matrix, int n)
+        public double[,] Transpose(double[,] matrix, int n)
         {
             double[,] transMatrix = new double[n, n];
             for (int i = 0; i < n; i++)
