@@ -7,7 +7,15 @@ namespace GUI
 {
     public class Export
     {
+        /// <summary>
+        /// Gets or sets the data to be exported as a string.
+        /// </summary>
         private string Data { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Export"/> class with the given equation.
+        /// Constructs the export data string from the equation's coefficients, constants, and results.
+        /// </summary>
+        /// <param name="equation">The equation to export.</param>
         public Export(Equation equation)
         {
             StringBuilder sb = new StringBuilder();
@@ -43,6 +51,10 @@ namespace GUI
             sb.AppendLine("]");
             Data = sb.ToString();
         }
+        /// <summary>
+        /// Exports the data to a specified file.
+        /// </summary>
+        /// <param name="fileName">The name of the file to export to.</param>
         private void ExportToFile(string fileName)
         {
             try
@@ -58,6 +70,9 @@ namespace GUI
                 MessageBox.Show("Сталася помилка при експорті даних: " + ex.Message, "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        /// <summary>
+        /// Opens a file dialog to select a file for export and appends the current data to the selected file.
+        /// </summary>
         public void OpenExportFile()
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();

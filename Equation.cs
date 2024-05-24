@@ -8,11 +8,32 @@ namespace GUI
 {
     public class Equation
     {
+        /// <summary>
+        /// Matrix of coefficients of the equation.
+        /// </summary>
         public double[,] Coefficients { get; set; }
+        /// <summary>
+        /// Vector of constant terms.
+        /// </summary>
         public double[] Constants { get; set; }
+        /// <summary>
+        /// Size of the matrix.
+        /// </summary>
         public int Size { get; set; }
+        /// <summary>
+        /// Solution of the equation.
+        /// </summary>
         public double[] Result { get; set; }
+        /// <summary>
+        /// Iteration counter, used to track the number of calculations.
+        /// </summary>
         public int IterationCounter { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Equation"/> class with specified coefficients, constants, and size.
+        /// </summary>
+        /// <param name="coefficients">Matrix of coefficients.</param>
+        /// <param name="constants">Vector of constant terms.</param>
+        /// <param name="size">Size of the matrix.</param>
         public Equation(double[,] coefficients, double[] constants, int size)
         {
             Coefficients = coefficients;
@@ -21,6 +42,12 @@ namespace GUI
             Result = new double[size];
             IterationCounter = 0;
         }
+        /// <summary>
+        /// Calculates the minor of a matrix by removing the first row and the specified column.
+        /// </summary>
+        /// <param name="matrix">Input matrix.</param>
+        /// <param name="index">Index of the column to be removed.</param>
+        /// <returns>The minor matrix.</returns>
         private double[,] CalculateMinor(double[,] matrix, int index)
         {
             int n = matrix.GetLength(0);
@@ -39,6 +66,12 @@ namespace GUI
 
             return minor;
         }
+        /// <summary>
+        /// Transposes the given matrix.
+        /// </summary>
+        /// <param name="matrix">Matrix to transpose.</param>
+        /// <param name="n">Size of the matrix.</param>
+        /// <returns>Transposed matrix.</returns>
         public double[,] Transpose(double[,] matrix, int n)
         {
             double[,] transMatrix = new double[n, n];
@@ -53,6 +86,11 @@ namespace GUI
             }
             return transMatrix;
         }
+        /// <summary>
+        /// Calculates the determinant of a matrix.
+        /// </summary>
+        /// <param name="matrix">Matrix to calculate the determinant of.</param>
+        /// <returns>The determinant of the matrix.</returns>
         public double CalculateDeterminant(double[,] matrix)
         {
             int n = matrix.GetLength(0);
@@ -71,6 +109,9 @@ namespace GUI
             }
             return determinant;
         }
+        /// <summary>
+        /// Solves the system of equations using the square root method.
+        /// </summary>
         public void CalculateSqrtMethod()
         {
             IterationCounter = 0;
@@ -140,6 +181,9 @@ namespace GUI
                 Result[i] = (y[i] - sum) / S[i, i];
             }
         }
+        /// <summary>
+        /// Solves the system of equations using the rotation method.
+        /// </summary>
         public void CalculateRotationMethod()
         {
             IterationCounter = 0;
@@ -193,6 +237,9 @@ namespace GUI
                 Result[i] = (B[i] - sum) / A[i, i];
             }
         }
+        /// <summary>
+        /// Solves the system of equations using the LUP method.
+        /// </summary>
         public void CalculateLUPMethod()
         {
             IterationCounter = 0;
@@ -292,6 +339,10 @@ namespace GUI
                 Result[i] /= U[i, i];
             }
         }
+        /// <summary>
+        /// Find the maximum and minimum value in the matrix of coefficients and vector free terms for the 2x2 system.
+        /// </summary>
+        /// <returns>An array containing the maximum and minimum values.</returns>
         public double[] FindMaximumMinimum()
         {
             int arrSize = Size * 3;

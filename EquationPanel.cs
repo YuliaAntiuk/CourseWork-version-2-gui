@@ -10,13 +10,30 @@ namespace GUI
 {
     public class EquationPanel:Panel
     {
+        /// <summary>
+        /// List of TextBox controls for entering the coefficients of the equations.
+        /// </summary>
         public readonly List<TextBox> coefficientTextBoxes;
+        /// <summary>
+        /// List of TextBox controls for entering the constant terms of the equations.
+        /// </summary>
         public readonly List<TextBox> constantTextBoxes;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EquationPanel"/> class.
+        /// </summary>
         public EquationPanel()
         {
             coefficientTextBoxes = new List<TextBox>();
             constantTextBoxes = new List<TextBox>();
         }
+        /// <summary>
+        /// Creates a TextBox for entering an equation coefficient or constant.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the TextBox location.</param>
+        /// <param name="y">The y-coordinate of the TextBox location.</param>
+        /// <param name="width">The width of the TextBox.</param>
+        /// <param name="name">The name of the TextBox.</param>
+        /// <returns>A configured TextBox control.</returns>
         private TextBox CreateEquationInput(int x, int y, int width, string name)
         {
             TextBox textBox = new TextBox();
@@ -27,6 +44,13 @@ namespace GUI
             textBox.Font = new Font("Segoe UI", 8);
             return textBox;
         }
+        /// <summary>
+        /// Creates a Label for the equation input panel.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the Label location.</param>
+        /// <param name="y">The y-coordinate of the Label location.</param>
+        /// <param name="text">The text of the Label.</param>
+        /// <returns>A configured Label control.</returns>
         private Label CreateEquationLabel(int x, int y, string text)
         {
             Label label = new Label();
@@ -36,12 +60,19 @@ namespace GUI
             label.Font = new Font("Segoe UI", 8);
             return label;
         }
+        /// <summary>
+        /// Clears all controls from the panel and resets the TextBox lists.
+        /// </summary>
         private void ClearPanel()
         {
             Controls.Clear();
             coefficientTextBoxes.Clear();
             constantTextBoxes.Clear();
         }
+        /// <summary>
+        /// Displays input controls for entering the coefficients and constants of a system of linear equations.
+        /// </summary>
+        /// <param name="dimension">The number of equations (and unknowns) in the system.</param>
         public void DisplayEquationsInput(int dimension)
         {
             ClearPanel();

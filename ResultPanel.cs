@@ -5,11 +5,18 @@ namespace GUI
     public class ResultPanel : Panel
     {
         private double[] Results { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ResultPanel"/> class with the specified results.
+        /// </summary>
+        /// <param name="results">The array of results to be displayed.</param>
         public ResultPanel(double[] results)
         {
             Results = results;
             this.AutoScroll = true;
         }
+        /// <summary>
+        /// Updates the content of the panel with the current results.
+        /// </summary>
         public void UpdatePanelContent()
         {
             this.Controls.Clear();
