@@ -65,7 +65,7 @@ namespace GUI
                 series.Points.AddXY(x, y);
             }
         }
-        private void AdjustChartZoom(Chart chart, Series series1, Series series2, double startX, double endX)
+        private void AdjustChartZoom(Chart chart, Series series1, Series series2)
         {
             double minX = Math.Min(series1.Points.Min(p => p.XValue), series2.Points.Min(p => p.XValue));
             double maxX = Math.Max(series1.Points.Max(p => p.XValue), series2.Points.Max(p => p.XValue));
@@ -122,7 +122,7 @@ namespace GUI
 
             if (equation.Result[0] < startX || equation.Result[0] > endX || equation.Result[1] < startX || equation.Result[1] > endX)
             {
-                AdjustChartZoom(chart, series1, series2, startX, endX);
+                AdjustChartZoom(chart, series1, series2);
             }
 
             Controls.Add(chart);
