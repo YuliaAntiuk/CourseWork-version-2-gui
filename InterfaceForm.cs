@@ -222,7 +222,10 @@ namespace GUI
             DimensionInput.Text = "";
             comboBoxMethods.SelectedItem = null;
             comboBoxMethods.Items.Remove("Графічний метод");
-            graphicalForm.Dispose();
+            if (graphicalForm != null)
+            {
+                graphicalForm.Dispose();
+            }
             Controls.RemoveByKey("resultPanel");
             Controls.RemoveByKey("complexityLabel");
             EnableInputs();
@@ -275,7 +278,10 @@ namespace GUI
         {
             DisableMenuItems();
             SolveToolStripMenuItem.Enabled = true;
-            graphicalForm.Dispose();
+            if(graphicalForm != null)
+            {
+                graphicalForm.Dispose();
+            }
             DisableInputs();
             comboBoxMethods.Enabled = true;
             Controls.RemoveByKey("resultPanel");
