@@ -21,7 +21,7 @@ namespace GUI
             Result = new double[size];
             IterationCounter = 0;
         }
-        public double[,] CalculateMinor(double[,] matrix, int index)
+        private double[,] CalculateMinor(double[,] matrix, int index)
         {
             int n = matrix.GetLength(0);
             double[,] minor = new double[n - 1, n - 1];
@@ -39,7 +39,7 @@ namespace GUI
 
             return minor;
         }
-        public double[,] Transpose(double[,] matrix, int n)
+        private double[,] Transpose(double[,] matrix, int n)
         {
             double[,] transMatrix = new double[n, n];
             for (int i = 0; i < n; i++)

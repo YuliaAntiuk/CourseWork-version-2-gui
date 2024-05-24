@@ -8,12 +8,12 @@ namespace GUI
 {
     public class GraphicalForm: Form
     {
-        public Equation equation;
+        private Equation equation;
         public GraphicalForm(Equation equation):base() 
         {
             this.equation = equation;
         }
-        public double[] FindMinMaxY(Series series)
+        private double[] FindMinMaxY(Series series)
         {
             double minY = double.PositiveInfinity;
             double maxY = double.NegativeInfinity;
@@ -32,7 +32,7 @@ namespace GUI
             }
             return new double[] { minY, maxY };
         }
-        public Chart CreateChart()
+        private Chart CreateChart()
         {
             Chart chart = new Chart();
             chart.Dock = DockStyle.Fill;
@@ -52,12 +52,12 @@ namespace GUI
 
             return chart;
         }
-        public void AddSeries(Chart chart, Series series)
+        private void AddSeries(Chart chart, Series series)
         {
             chart.Series.Add(series);
             chart.Series[series.Name].Legend = "Legend";
         }
-        public void AddPointsToSeries(Series series, double startX, double endX, Func<double, double> calculateY)
+        private void AddPointsToSeries(Series series, double startX, double endX, Func<double, double> calculateY)
         {
             for (double x = startX; x <= endX; x += 0.1)
             {
@@ -65,7 +65,7 @@ namespace GUI
                 series.Points.AddXY(x, y);
             }
         }
-        public void AdjustChartZoom(Chart chart, Series series1, Series series2, double startX, double endX)
+        private void AdjustChartZoom(Chart chart, Series series1, Series series2, double startX, double endX)
         {
             double minX = Math.Min(series1.Points.Min(p => p.XValue), series2.Points.Min(p => p.XValue));
             double maxX = Math.Max(series1.Points.Max(p => p.XValue), series2.Points.Max(p => p.XValue));
@@ -132,7 +132,7 @@ namespace GUI
                 Dispose();
             };
         }
-        public void ChartMouseWheelEventHandler(object sender, MouseEventArgs e)
+        private void ChartMouseWheelEventHandler(object sender, MouseEventArgs e)
         {
             Chart chart = (Chart)sender;
 
@@ -174,7 +174,7 @@ namespace GUI
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "F1";
             chart.ChartAreas[0].AxisY.LabelStyle.Format = "F1";
         }
-        public Series CreateSeries(int index)
+        private Series CreateSeries(int index)
         {
             Series series = new Series();
             series.ChartType = SeriesChartType.Line;
@@ -182,12 +182,12 @@ namespace GUI
             series.BorderWidth = 3;
             return series;
         }
-        public void CalculateIntersectionPoints()
+        private void CalculateIntersectionPoints()
         {
             equation.Result[0] = (equation.Coefficients[1, 1] * equation.Constants[0] - equation.Coefficients[0, 1] * equation.Constants[1]) / equation.CalculateDeterminant(equation.Coefficients);
             equation.Result[1] = (equation.Coefficients[0, 0] * equation.Constants[1] - equation.Coefficients[1, 0] * equation.Constants[0]) / equation.CalculateDeterminant(equation.Coefficients);
         }
-        public double CalculateY(double a1, double a2, double b, double x)
+        private double CalculateY(double a1, double a2, double b, double x)
         {
             if (a2 != 0)
             {
