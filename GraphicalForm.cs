@@ -152,6 +152,8 @@ namespace GUI
 
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(posXStart, posXFinish);
             chart.ChartAreas[0].AxisY.ScaleView.Zoom(posYStart, posYFinish);
+            chart.ChartAreas[0].AxisX.LabelStyle.Format = "F1";
+            chart.ChartAreas[0].AxisY.LabelStyle.Format = "F1";
         }
         public Series CreateSeries(int index)
         {
