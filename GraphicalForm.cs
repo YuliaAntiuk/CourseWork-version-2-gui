@@ -65,6 +65,20 @@ namespace GUI
                 series.Points.AddXY(x, y);
             }
         }
+        public void AdjustChartZoom(Chart chart, Series series1, Series series2, double startX, double endX)
+        {
+            double minX = Math.Min(series1.Points.Min(p => p.XValue), series2.Points.Min(p => p.XValue));
+            double maxX = Math.Max(series1.Points.Max(p => p.XValue), series2.Points.Max(p => p.XValue));
+            double minY = Math.Min(series1.Points.Min(p => p.YValues[0]), series2.Points.Min(p => p.YValues[0]));
+            double maxY = Math.Max(series1.Points.Max(p => p.YValues[0]), series2.Points.Max(p => p.YValues[0]));
+
+            double padding = 0.1; 
+
+            chart.ChartAreas[0].AxisX.ScaleView.Zoom(minX - padding, maxX + padding);
+            chart.ChartAreas[0].AxisY.ScaleView.Zoom(minY - padding, maxY + padding);
+            chart.ChartAreas[0].AxisX.LabelStyle.Format = "F1";
+            chart.ChartAreas[0].AxisY.LabelStyle.Format = "F1";
+        }
         public void CreateGraphic()
         {
             Text = "Графіки рівнянь";
@@ -105,6 +119,11 @@ namespace GUI
             AddSeries(chart, series2);
 
             CalculateIntersectionPoints();
+
+            if (equation.Result[0] < startX || equation.Result[0] > endX || equation.Result[1] < startX || equation.Result[1] > endX)
+            {
+                AdjustChartZoom(chart, series1, series2, startX, endX);
+            }
 
             Controls.Add(chart);
             Show();
