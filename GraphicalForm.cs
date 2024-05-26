@@ -16,6 +16,7 @@ namespace GUI
         public GraphicalForm(Equation equation):base() 
         {
             this.equation = equation;
+            this.MinimumSize = new System.Drawing.Size(600, 600);
         }
         /// <summary>
         /// Finds the minimum and maximum Y values in a given series.
