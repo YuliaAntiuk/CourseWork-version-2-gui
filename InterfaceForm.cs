@@ -57,10 +57,8 @@ namespace GUI
             this.equation = new Equation(coefficients, constants, equationDimension);
         }
         /// <summary>
-        /// Handles the KeyPress event of the DimensionInput control to set up the equations input fields.
+        /// Realization of DimensionInput_KeyPress
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void DimensionInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
@@ -253,10 +251,8 @@ namespace GUI
             EnableMenuItems();
         }
         /// <summary>
-        /// Handles the Click event of the ClearToolStripMenuItem to clear the input fields and reset the form.
+        /// Realization of ClearToolStripMenuItem_Click
         /// </summary>        
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             equationPanel.Controls.Clear();
@@ -274,10 +270,8 @@ namespace GUI
             DisableMenuItems();
         }
         /// <summary>
-        /// Handles the Click event of the SolveToolStripMenuItem to solve the equations.
+        /// Realization of SolveToolStripMenuItem_Click
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void SolveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int dimension = Convert.ToInt32(DimensionInput.Text);
@@ -310,37 +304,29 @@ namespace GUI
             ClearToolStripMenuItem.Enabled = true;
         }
         /// <summary>
-        /// Handles the TextChanged event of the DimensionInput control to update the solve menu state.
+        /// Realization of DimensionInput_TextChanged
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void DimensionInput_TextChanged(object sender, EventArgs e)
         {
             UpdateSolveMenuState(); 
         }
         /// <summary>
-        /// Handles the SelectedIndexChanged event of the ComboBox to update the solve menu state.
+        /// Realization of ComboBox_SelectedIndexChanged
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void ComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSolveMenuState();
         }
         /// <summary>
-        /// Handles the TextChanged event of the TextBox controls to update the solve menu state.
+        /// Realization of TextBox_TextChanged
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void TextBox_TextChanged(object sender, EventArgs e)
         {
             UpdateSolveMenuState(); 
         }
         /// <summary>
-        /// Handles the Click event of the ChangeToolStripMenuItem to enable the inputs and reset the result display.
+        /// Realization of ChangeToolStripMenuItem_Click
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void ChangeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DisableMenuItems();
@@ -355,20 +341,16 @@ namespace GUI
             Controls.RemoveByKey("complexityLabel");
         }
         /// <summary>
-        /// Handles the Click event of the ExportToolStripMenuItem to export the equation data.
+        /// Realization of ExportToolStripMenuItem_Click
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void ExportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Export export = new Export(equation);
             export.OpenExportFile();
         }
         /// <summary>
-        /// Handles the Click event of the ComplexityToolStripMenuItem to display the complexity of the solution.
+        /// Realization of  ComplexityToolStripMenuItem_Click
         /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The event data.</param>
         public void ComplexityToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Label complexityLabel = new Label();
