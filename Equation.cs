@@ -120,7 +120,6 @@ namespace GUI
 
             for (int i = 0; i < Size; i++)
             {
-                IterationCounter++;
                 for (int j = 0; j < Size; j++)
                 {
                     IterationCounter++;
@@ -158,7 +157,6 @@ namespace GUI
             y[0] = Constants[0] / S[0, 0];
             for (int i = 1; i < Size; i++)
             {
-                IterationCounter++;
                 double sum = 0;
                 for (int j = 0; j < i; j++)
                 {
@@ -171,7 +169,6 @@ namespace GUI
             Result[Size - 1] = y[Size - 1] / S[Size - 1, Size - 1];
             for (int i = Size - 2; i >= 0; i--)
             {
-                IterationCounter++;
                 double sum = 0;
                 for (int j = i + 1; j < Size; j++)
                 {
@@ -193,7 +190,6 @@ namespace GUI
             Array.Copy(Constants, B, Constants.Length);
             for (int i = 0; i < Size - 1; i++)
             {
-                IterationCounter++;
                 for (int k = i + 1; k < Size; k++)
                 {
                     IterationCounter++;
@@ -223,7 +219,6 @@ namespace GUI
 
             for (int i = Size - 1; i >= 0; i--)
             {
-                IterationCounter++;
                 if (Math.Abs(A[i, i]) < double.Epsilon)
                 {
                     throw new InvalidOperationException("Ділення на число, близьке за модулем до 0.");
@@ -249,20 +244,17 @@ namespace GUI
 
             for (int i = 0; i < Size; i++)
             {
-                IterationCounter++;
                 P[i] = i;
             }
 
             Array.Copy(Coefficients, U, Coefficients.Length);
             for (int i = 0; i < Size; i++)
             {
-                IterationCounter++;
                 L[i, i] = 1.0;
             }
 
             for (int k = 0; k < Size - 1; k++)
             {
-                IterationCounter++;
                 int pivotRow = k;
                 double pivotValue = Math.Abs(U[k, k]);
 
@@ -302,7 +294,6 @@ namespace GUI
 
                 for (int i = k + 1; i < Size; i++)
                 {
-                    IterationCounter++;
                     if (Math.Abs(U[k, k]) < double.Epsilon)
                     {
                         throw new InvalidOperationException("Ділення на число, близьке за модулем до 0.");

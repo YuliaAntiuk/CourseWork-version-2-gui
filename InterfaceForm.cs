@@ -360,6 +360,7 @@ namespace GUI
             complexityLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10f, System.Drawing.FontStyle.Regular);
             complexityLabel.Location = new System.Drawing.Point(18, resultPanel.Bottom + 15);
             this.Controls.Add(complexityLabel);
+            ComplexityToolStripMenuItem.Enabled = false;
         }
     }
 }
