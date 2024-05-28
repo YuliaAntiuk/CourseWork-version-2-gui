@@ -294,7 +294,18 @@ namespace GUI
 
             DecomposeLUP(L, U, P);
             double[] y = SolveLyEqualsB(L, P);
-            SolveUxEqualsY(U, y);
+
+            for (int i = Size - 1; i >= 0; i--)
+            {
+                IterationCounter++;
+                Result[i] = y[i];
+                for (int j = i + 1; j < Size; j++)
+                {
+                    IterationCounter++;
+                    Result[i] -= U[i, j] * Result[j];
+                }
+                Result[i] /= U[i, i];
+            }
         }
         /// <summary>
         /// Performs LUP decomposition.
@@ -335,7 +346,7 @@ namespace GUI
         /// <summary>
         /// Computes pivot row.
         /// </summary>
-        /// <param name="U">Upper triangular matrix.</param>
+        /// <param name="U">Upper triangular matrix in which the pivot needs to be found.</param>
         /// <param name="k">Primary row index.</param>
         /// <returns>New pivot row.</returns>
         private int FindPivotRow(double[,] U, int k)
@@ -393,25 +404,6 @@ namespace GUI
             }
 
             return y;
-        }
-        /// <summary>
-        /// Computes result vector based on U matrix and y.
-        /// </summary>
-        /// <param name="U">Upper triangular matrix.</param>
-        /// <param name="y">y vector.</param>
-        private void SolveUxEqualsY(double[,] U, double[] y)
-        {
-            for (int i = Size - 1; i >= 0; i--)
-            {
-                IterationCounter++;
-                Result[i] = y[i];
-                for (int j = i + 1; j < Size; j++)
-                {
-                    IterationCounter++;
-                    Result[i] -= U[i, j] * Result[j];
-                }
-                Result[i] /= U[i, i];
-            }
         }
         /// <summary>
         /// Find the maximum and minimum value in the matrix of coefficients and vector free terms for the 2x2 system.
