@@ -115,9 +115,29 @@ namespace GUI
         public void CalculateSqrtMethod()
         {
             IterationCounter = 0;
-            double[,] S = new double[Size, Size];
-            double[] y = new double[Size];
+            double[,] S = ComputeSMatrix();
+            double[,] St = Transpose(S, Size);
+            double[] y = ComputeY(S);
 
+            Result[Size - 1] = y[Size - 1] / S[Size - 1, Size - 1];
+            for (int i = Size - 2; i >= 0; i--)
+            {
+                double sum = 0;
+                for (int j = i + 1; j < Size; j++)
+                {
+                    IterationCounter++;
+                    sum += St[i, j] * Result[j];
+                }
+                Result[i] = (y[i] - sum) / S[i, i];
+            }
+        }
+        /// <summary>
+        /// Computes the S matrix for Sqrt method.
+        /// </summary>
+        /// <returns>The S matrix.</returns>
+        private double[,] ComputeSMatrix()
+        {
+            double[,] S = new double[Size, Size];
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
@@ -151,9 +171,16 @@ namespace GUI
                     }
                 }
             }
-
-            double[,] St = Transpose(S, Size);
-
+            return S;
+        }
+        /// <summary>
+        /// Computes the y vector.
+        /// </summary>
+        /// <param name="S">The S matrix based on which the Y vector is calculated.</param>
+        /// <returns>The y vector.</returns>
+        private double[] ComputeY(double[,] S)
+        {
+            double[] y = new double[Size];
             y[0] = Constants[0] / S[0, 0];
             for (int i = 1; i < Size; i++)
             {
@@ -165,18 +192,7 @@ namespace GUI
                 }
                 y[i] = (Constants[i] - sum) / S[i, i];
             }
-
-            Result[Size - 1] = y[Size - 1] / S[Size - 1, Size - 1];
-            for (int i = Size - 2; i >= 0; i--)
-            {
-                double sum = 0;
-                for (int j = i + 1; j < Size; j++)
-                {
-                    IterationCounter++;
-                    sum += St[i, j] * Result[j];
-                }
-                Result[i] = (y[i] - sum) / S[i, i];
-            }
+            return y;
         }
         /// <summary>
         /// Solves the system of equations using the rotation method.
@@ -188,11 +204,11 @@ namespace GUI
             double[] B = new double[Size];
             Array.Copy(Coefficients, A, Coefficients.Length);
             Array.Copy(Constants, B, Constants.Length);
+
             for (int i = 0; i < Size - 1; i++)
             {
                 for (int k = i + 1; k < Size; k++)
                 {
-                    IterationCounter++;
                     double r = Math.Sqrt(A[i, i] * A[i, i] + A[k, i] * A[k, i]);
                     if (Math.Abs(r) < double.Epsilon)
                     {
@@ -201,19 +217,8 @@ namespace GUI
                     double c = A[i, i] / r;
                     double s = -A[k, i] / r;
 
-                    for (int j = 0; j < Size; j++)
-                    {
-                        IterationCounter++;
-                        double tempA1 = A[i, j];
-                        double tempA2 = A[k, j];
-                        A[i, j] = c * tempA1 - s * tempA2;
-                        A[k, j] = s * tempA1 + c * tempA2;
-                    }
-
-                    double tempB1 = B[i];
-                    double tempB2 = B[k];
-                    B[i] = c * tempB1 - s * tempB2;
-                    B[k] = s * tempB1 + c * tempB2;
+                    RotateMatrix(A, i, k, c, s);
+                    RotateVector(B, i, k, c, s);
                 }
             }
 
@@ -231,6 +236,40 @@ namespace GUI
                 }
                 Result[i] = (B[i] - sum) / A[i, i];
             }
+        }
+        /// <summary>
+        /// Rotates A Matrix.
+        /// </summary>
+        /// <param name="A">Matrix to rotate.</param>
+        /// <param name="i">First row index.</param>
+        /// <param name="k">Second row index.</param>
+        /// <param name="c">Cos for rotation.</param>
+        /// <param name="s">Sin for rotation.</param>
+        private void RotateMatrix(double[,] A, int i, int k, double c, double s)
+        {
+            for (int j = 0; j < Size; j++)
+            {
+                IterationCounter++;
+                double tempA1 = A[i, j];
+                double tempA2 = A[k, j];
+                A[i, j] = c * tempA1 - s * tempA2;
+                A[k, j] = s * tempA1 + c * tempA2;
+            }
+        }
+        /// <summary>
+        /// Rotates B Vector.
+        /// </summary>
+        /// <param name="B">Vector to rotate.</param>
+        /// <param name="i">First row index.</param>
+        /// <param name="k">Second row index.</param>
+        /// <param name="c">Cos for rotation.</param>
+        /// <param name="s">Sin for rotation.</param>
+        private void RotateVector(double[] B, int i, int k, double c, double s)
+        {
+            double tempB1 = B[i];
+            double tempB2 = B[k];
+            B[i] = c * tempB1 - s * tempB2;
+            B[k] = s * tempB1 + c * tempB2;
         }
         /// <summary>
         /// Solves the system of equations using the LUP method.
@@ -253,45 +292,31 @@ namespace GUI
                 L[i, i] = 1.0;
             }
 
+            DecomposeLUP(L, U, P);
+            double[] y = SolveLyEqualsB(L, P);
+            SolveUxEqualsY(U, y);
+        }
+        /// <summary>
+        /// Performs LUP decomposition.
+        /// </summary>
+        /// <param name="L">Lower triangular matrix.</param>
+        /// <param name="U">Upper triangular matrix.</param>
+        /// <param name="P">Permutation matrix.</param>
+        private void DecomposeLUP(double[,] L, double[,] U, int[] P)
+        {
             for (int k = 0; k < Size - 1; k++)
             {
-                int pivotRow = k;
-                double pivotValue = Math.Abs(U[k, k]);
-
-                for (int i = k + 1; i < Size; i++)
-                {
-                    IterationCounter++;
-                    if (Math.Abs(U[i, k]) > pivotValue)
-                    {
-                        pivotRow = i;
-                        pivotValue = Math.Abs(U[i, k]);
-                    }
-                }
-
+                int pivotRow = FindPivotRow(U, k);
                 if (pivotRow != k)
                 {
-                    double temp;
-                    for (int j = 0; j < Size; j++)
-                    {
-                        IterationCounter++;
-                        temp = U[k, j];
-                        U[k, j] = U[pivotRow, j];
-                        U[pivotRow, j] = temp;
-                    }
+                    SwapRows(U, k, pivotRow);
 
                     int tempIndex = P[k];
                     P[k] = P[pivotRow];
                     P[pivotRow] = tempIndex;
 
-                    for (int j = 0; j < k; j++)
-                    {
-                        IterationCounter++;
-                        temp = L[k, j];
-                        L[k, j] = L[pivotRow, j];
-                        L[pivotRow, j] = temp;
-                    }
+                    SwapRows(L, k, pivotRow, k);
                 }
-
                 for (int i = k + 1; i < Size; i++)
                 {
                     if (Math.Abs(U[k, k]) < double.Epsilon)
@@ -306,7 +331,55 @@ namespace GUI
                     }
                 }
             }
+        }
+        /// <summary>
+        /// Computes pivot row.
+        /// </summary>
+        /// <param name="U">Upper triangular matrix.</param>
+        /// <param name="k">Primary row index.</param>
+        /// <returns>New pivot row.</returns>
+        private int FindPivotRow(double[,] U, int k)
+        {
+            int pivotRow = k;
+            double pivotValue = Math.Abs(U[k, k]);
 
+            for (int i = k + 1; i < Size; i++)
+            {
+                IterationCounter++;
+                if (Math.Abs(U[i, k]) > pivotValue)
+                {
+                    pivotRow = i;
+                    pivotValue = Math.Abs(U[i, k]);
+                }
+            }
+
+            return pivotRow;
+        }
+        /// <summary>
+        /// Swaps rows
+        /// </summary>
+        /// <param name="matrix">Matrix for swapping rows.</param>
+        /// <param name="row1">First row.</param>
+        /// <param name="row2">Second row.</param>
+        /// <param name="startColumn">Column to start.</param>
+        private void SwapRows(double[,] matrix, int row1, int row2, int startColumn = 0)
+        {
+            for (int j = startColumn; j < Size; j++)
+            {
+                IterationCounter++;
+                double temp = matrix[row1, j];
+                matrix[row1, j] = matrix[row2, j];
+                matrix[row2, j] = temp;
+            }
+        }
+        /// <summary>
+        /// Computes y vector based on L matrix and constant vector considering permutations
+        /// </summary>
+        /// <param name="L">Lower triangular matrix.</param>
+        /// <param name="P">Permutation vector.</param>
+        /// <returns>y vector</returns>
+        private double[] SolveLyEqualsB(double[,] L, int[] P)
+        {
             double[] y = new double[Size];
             for (int i = 0; i < Size; i++)
             {
@@ -318,6 +391,16 @@ namespace GUI
                     y[i] -= L[i, j] * y[j];
                 }
             }
+
+            return y;
+        }
+        /// <summary>
+        /// Computes result vector based on U matrix and y.
+        /// </summary>
+        /// <param name="U">Upper triangular matrix.</param>
+        /// <param name="y">y vector.</param>
+        private void SolveUxEqualsY(double[,] U, double[] y)
+        {
             for (int i = Size - 1; i >= 0; i--)
             {
                 IterationCounter++;
