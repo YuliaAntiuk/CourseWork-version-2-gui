@@ -63,7 +63,7 @@ namespace GUI
         /// <summary>
         /// Clears all controls from the panel and resets the TextBox lists.
         /// </summary>
-        private void ClearPanel()
+        public void ClearPanel()
         {
             Controls.Clear();
             coefficientTextBoxes.Clear();

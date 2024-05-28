@@ -68,6 +68,7 @@ namespace GUI
                     if (equationDimension < 2 || equationDimension > 10)
                     {
                         MessageBox.Show("Розмірність системи повинна бути між 2 та 10", "Помилка вводу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        equationPanel.ClearPanel();
                     }
                     else
                     {
