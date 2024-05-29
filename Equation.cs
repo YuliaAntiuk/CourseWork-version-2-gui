@@ -266,6 +266,7 @@ namespace GUI
         /// <param name="s">Sin for rotation.</param>
         private void RotateVector(double[] B, int i, int k, double c, double s)
         {
+            IterationCounter++;
             double tempB1 = B[i];
             double tempB2 = B[k];
             B[i] = c * tempB1 - s * tempB2;
