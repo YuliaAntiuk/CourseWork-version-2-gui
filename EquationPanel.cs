@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -80,6 +79,8 @@ namespace GUI
             const int textBoxSpacing = 5;
             int yOffset = 30;
 
+            int middleRow = dimension / 2;
+
             for (int i = 0; i < dimension; i++)
             {
                 int x = 0;
@@ -90,13 +91,26 @@ namespace GUI
                     Controls.Add(coefficientTextBox);
                     x = coefficientTextBox.Right + textBoxSpacing;
                 }
+
                 Label variableLabel = CreateEquationLabel(x, yOffset * i, $"x{i + 1}");
                 Controls.Add(variableLabel);
                 x = variableLabel.Right + textBoxSpacing;
 
-                Label equalsLabel = CreateEquationLabel(x, yOffset * i, " = ");
-                Controls.Add(equalsLabel);
-                x = equalsLabel.Right + textBoxSpacing;
+                if (i == middleRow)
+                {
+                    int equalsY = yOffset * i;
+                    if(dimension % 2 == 0)
+                    {
+                       equalsY -= 10;
+                    }
+                    Label equalsLabel = CreateEquationLabel(x, equalsY, " = ");
+                    Controls.Add(equalsLabel);
+                    x = equalsLabel.Right + textBoxSpacing;
+                }
+                else
+                {
+                    x += 5 * textBoxSpacing;
+                }
 
                 TextBox constantTextBox = CreateEquationInput(x, yOffset * i, textBoxWidth, $"textBoxConstant{i + 1}");
                 constantTextBoxes.Add(constantTextBox);
@@ -104,5 +118,6 @@ namespace GUI
             }
             Height = yOffset * dimension;
         }
+
     }
 }

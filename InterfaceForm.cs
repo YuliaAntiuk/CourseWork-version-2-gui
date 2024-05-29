@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -88,6 +88,7 @@ namespace GUI
                 else
                 {
                     MessageBox.Show("Будь ласка, введіть коректну розмірність системи.", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    equationPanel.ClearPanel();
                 }
                 if (equationDimension == 2)
                 {
