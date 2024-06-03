@@ -324,7 +324,7 @@ namespace GUI
                     P[k] = P[pivotRow];
                     P[pivotRow] = tempIndex;
 
-                    SwapRows(L, k, pivotRow, k);
+                    SwapRows(L, k, pivotRow);
                 }
                 for (int i = k + 1; i < Size; i++)
                 {
