@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace GUI
@@ -168,7 +169,7 @@ namespace GUI
 
             foreach (TextBox textBox in equationPanel.coefficientTextBoxes)
             {
-                if (string.IsNullOrEmpty(textBox.Text))
+                if (string.IsNullOrEmpty(textBox.Text) || !double.TryParse(textBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
                 {
                     areCoefficientsEntered = false;
                     break;
@@ -177,7 +178,7 @@ namespace GUI
 
             foreach (TextBox textBox in equationPanel.constantTextBoxes)
             {
-                if (string.IsNullOrEmpty(textBox.Text))
+                if (string.IsNullOrEmpty(textBox.Text) || !double.TryParse(textBox.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out _))
                 {
                     areConstantsEntered = false;
                     break;
