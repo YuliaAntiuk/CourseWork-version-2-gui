@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Drawing;
 using System.Linq;
-using System.Windows.Forms;
-using System.Windows.Forms.DataVisualization.Charting;
 
 namespace GUI
 {
