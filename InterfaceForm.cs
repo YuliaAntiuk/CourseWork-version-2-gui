@@ -84,6 +84,7 @@ namespace GUI
                             }
                         }
                     }
+                    UpdateSolveMenuState();
                 }
                 else
                 {
@@ -310,7 +311,8 @@ namespace GUI
         /// </summary>
         public void DimensionInput_TextChanged(object sender, EventArgs e)
         {
-            UpdateSolveMenuState(); 
+            SolveToolStripMenuItem.Enabled = false;
+            equationPanel.ClearPanel();
         }
         /// <summary>
         /// Realization of ComboBox_SelectedIndexChanged

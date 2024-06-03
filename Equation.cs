@@ -318,13 +318,13 @@ namespace GUI
                 int pivotRow = FindPivotRow(U, k);
                 if (pivotRow != k)
                 {
-                    SwapRows(U, k, pivotRow);
+                    SwapRows(U, k, pivotRow, Size);
 
                     int tempIndex = P[k];
                     P[k] = P[pivotRow];
                     P[pivotRow] = tempIndex;
 
-                    SwapRows(L, k, pivotRow);
+                    SwapRows(L, k, pivotRow, k);
                 }
                 for (int i = k + 1; i < Size; i++)
                 {
@@ -371,9 +371,9 @@ namespace GUI
         /// <param name="row1">First row.</param>
         /// <param name="row2">Second row.</param>
         /// <param name="startColumn">Column to start.</param>
-        private void SwapRows(double[,] matrix, int row1, int row2, int startColumn = 0)
+        private void SwapRows(double[,] matrix, int row1, int row2, int end)
         {
-            for (int j = startColumn; j < Size; j++)
+            for (int j = 0; j < end; j++)
             {
                 IterationCounter++;
                 double temp = matrix[row1, j];
