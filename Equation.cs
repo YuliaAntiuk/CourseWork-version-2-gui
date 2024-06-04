@@ -139,12 +139,12 @@ namespace GUI
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    IterationCounter++;
                     if (i == j)
                     {
                         double sum = 0;
                         for (int k = 0; k < i; k++)
                         {
+                            IterationCounter++;
                             sum += S[i, k] * S[i, k];
                         }
                         S[i, i] = Math.Sqrt(Coefficients[i, i] - sum);
@@ -154,6 +154,7 @@ namespace GUI
                         double sum = 0;
                         for (int k = 0; k < j; k++)
                         {
+                            IterationCounter++;
                             sum += S[i, k] * S[j, k];
                         }
                         if (Math.Abs(S[j, j]) < double.Epsilon)
