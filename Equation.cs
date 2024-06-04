@@ -74,7 +74,6 @@ namespace GUI
             double[,] transMatrix = new double[n, n];
             for (int i = 0; i < n; i++)
             {
-                IterationCounter++;
                 for (int j = 0; j < n; j++)
                 {
                     IterationCounter++;
