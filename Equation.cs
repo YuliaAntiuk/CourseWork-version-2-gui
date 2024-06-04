@@ -206,13 +206,18 @@ namespace GUI
             {
                 for (int k = i + 1; k < Size; k++)
                 {
+                    double c = 0.0;
+                    double s = 0.0;
                     double r = Math.Sqrt(A[i, i] * A[i, i] + A[k, i] * A[k, i]);
                     if (Math.Abs(r) < double.Epsilon)
                     {
-                        throw new InvalidOperationException("Ділення на число, близьке за модулем до 0.");
+                        c = 1.0;
+                        s = 0.0;
+                    } else
+                    {
+                        c = A[i, i] / r;
+                        s = -A[k, i] / r;
                     }
-                    double c = A[i, i] / r;
-                    double s = -A[k, i] / r;
 
                     RotateMatrix(A, i, k, c, s);
                     RotateVector(B, i, k, c, s);
