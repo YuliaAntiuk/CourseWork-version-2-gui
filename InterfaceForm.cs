@@ -42,6 +42,7 @@ namespace GUI
                     } else
                     {
                         MessageBox.Show("Не вдається записати коефіцієнти", "Помилка запису", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                        return;
                     }
                 }
 
@@ -53,6 +54,7 @@ namespace GUI
                 else
                 {
                     MessageBox.Show("Не вдається записати коефіцієнти", "Помилка запису", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
             this.equation = new Equation(coefficients, constants, equationDimension);
