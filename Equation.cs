@@ -209,18 +209,14 @@ namespace GUI
                     double c = 0.0;
                     double s = 0.0;
                     double r = Math.Sqrt(A[i, i] * A[i, i] + A[k, i] * A[k, i]);
-                    if (Math.Abs(r) < double.Epsilon)
-                    {
-                        c = 1.0;
-                        s = 0.0;
-                    } else
+                    if (!(Math.Abs(r) < double.Epsilon))
                     {
                         c = A[i, i] / r;
                         s = -A[k, i] / r;
-                    }
 
-                    RotateMatrix(A, i, k, c, s);
-                    RotateVector(B, i, k, c, s);
+                        RotateMatrix(A, i, k, c, s);
+                        RotateVector(B, i, k, c, s);
+                    } 
                 }
             }
 
@@ -300,7 +296,6 @@ namespace GUI
 
             for (int i = Size - 1; i >= 0; i--)
             {
-                IterationCounter++;
                 Result[i] = y[i];
                 for (int j = i + 1; j < Size; j++)
                 {
@@ -397,7 +392,6 @@ namespace GUI
             double[] y = new double[Size];
             for (int i = 0; i < Size; i++)
             {
-                IterationCounter++;
                 y[i] = Constants[P[i]];
                 for (int j = 0; j < i; j++)
                 {
