@@ -19,7 +19,7 @@ namespace GUI
         /// <summary>
         /// Maximum difference allowed between maximum and minimum coefficients for graphical method.
         /// </summary>
-        public static double graphicalDiffRestriction = 500.0;
+        public static double graphicalDiffRestriction = 1000.0;
         /// <summary>
         /// Checks if the dimension input is valid.
         /// </summary>
